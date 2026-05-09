@@ -339,13 +339,28 @@ npm run build
 ```nginx
 server {
 
+    listen 80;
+
+    server_name movie.sysnetwork.biz.id sysnetwork.biz.id;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+
     listen 443 ssl http2;
 
-    server_name movie.sysnetwork.biz.id;
+    server_name movie.sysnetwork.biz.id sysnetwork.biz.id;
 
     root /var/www/cinemata;
 
     index index.html;
+
+    ssl_certificate /etc/letsencrypt/live/movie.sysnetwork.biz.id/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/movie.sysnetwork.biz.id/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     location / {
 
@@ -355,6 +370,18 @@ server {
     location /api/ {
 
         proxy_pass http://127.0.0.1:8000/;
+
+        proxy_set_header Host $host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_http_version 1.1;
+
+        proxy_read_timeout 300;
     }
 }
 ```
@@ -405,13 +432,29 @@ server {
 
 ---
 
-# 👨‍💻 Developer
+# 👨‍💻 Developers
+
+| Nama              | NIM     | GitHub                                       |
+| ----------------- | ------- | -------------------------------------------- |
+| Adi Sani Alviga   | 1221601 | [@sanialviga](https://github.com/sanialviga) |
+| Vito Arsy Saputra | 1221623 | [@vitoas30](https://github.com/vitoas30/)    |
+| Reza Anwar Sanusi | 3220002 | -                                            |
+
+---
+
+## 📌 Contributor Profiles
 
 ### Adi Sani Alviga
 
-- GitHub: [https://github.com/sanialviga](https://github.com/sanialviga)
+- GitHub: https://github.com/sanialviga
 
----
+### Vito Arsy Saputra
+
+- GitHub: https://github.com/vitoas30/
+
+### Reza Anwar Sanusi
+
+- GitHub: Not Available
 
 # 📄 License
 
