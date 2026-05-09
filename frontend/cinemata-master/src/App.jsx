@@ -2352,6 +2352,194 @@ function App() {
           </div>
         )}
       </main>
+      {/* ============================================ */}
+      {/* Ultra Compact Footer */}
+      {/* ============================================ */}
+
+      <footer
+        style={{
+          marginTop: "-24px",
+
+          padding: "20px 18px 14px",
+
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+
+          background:
+            "linear-gradient(to top, rgba(255,255,255,0.015), transparent)",
+
+          textAlign: "center",
+        }}
+      >
+        {/* Logo */}
+
+        <div
+          style={{
+            fontSize: "20px",
+
+            fontWeight: "800",
+
+            marginBottom: "4px",
+
+            background: "linear-gradient(to right, #ffffff, #60a5fa)",
+
+            WebkitBackgroundClip: "text",
+
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          🎬 CINEMATA
+        </div>
+
+        {/* Subtitle */}
+
+        <div
+          style={{
+            color: "#94a3b8",
+
+            fontSize: "12px",
+
+            marginBottom: "1px",
+          }}
+        >
+          AI Powered Movie Review Platform
+        </div>
+
+        <div
+          style={{
+            color: "#64748b",
+
+            fontSize: "11px",
+
+            marginBottom: "14px",
+          }}
+        >
+          Built with ❤️ using React, FastAPI, IndoBERT, and PostgreSQL.
+        </div>
+
+        {/* Team Card */}
+
+        <div
+          style={{
+            maxWidth: "430px",
+
+            margin: "0 auto",
+
+            borderRadius: "12px",
+
+            overflow: "hidden",
+
+            border: "1px solid rgba(255,255,255,0.05)",
+
+            background:
+              "linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))",
+
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          {/* Header */}
+
+          <div
+            style={{
+              display: "grid",
+
+              gridTemplateColumns: "1.4fr 1fr",
+
+              padding: "7px 12px",
+
+              background: "rgba(255,255,255,0.03)",
+
+              color: "#f1f5f9",
+
+              fontSize: "11px",
+
+              fontWeight: "700",
+            }}
+          >
+            <div align="left">Nama</div>
+
+            <div align="left">GitHub</div>
+          </div>
+
+          {/* Members */}
+
+          {[
+            {
+              name: "Adi Sani Alviga",
+              github: "@sanialviga",
+              link: "https://github.com/sanialviga",
+            },
+
+            {
+              name: "Vito Arsy Saputra",
+              github: "@vitoas30",
+              link: "https://github.com/vitoas30",
+            },
+
+            {
+              name: "Reza Anwar Sanusi",
+              github: "-",
+              link: null,
+            },
+          ].map((member, index) => (
+            <div
+              key={index}
+              style={{
+                display: "grid",
+
+                gridTemplateColumns: "1.4fr 1fr",
+
+                padding: "8px 12px",
+
+                borderTop:
+                  index !== 0 ? "1px solid rgba(255,255,255,0.035)" : "none",
+
+                fontSize: "11px",
+
+                color: "#cbd5e1",
+
+                alignItems: "center",
+              }}
+            >
+              <div align="left">{member.name}</div>
+
+              <div align="left">
+                {member.link ? (
+                  <a
+                    href={member.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      color: "#60a5fa",
+
+                      textDecoration: "none",
+
+                      fontWeight: "600",
+                    }}
+                  >
+                    {member.github}
+                  </a>
+                ) : (
+                  <span style={{ color: "#64748b" }}>{member.github}</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom */}
+
+        <div
+          style={{
+            marginTop: "10px",
+
+            color: "#475569",
+
+            fontSize: "10px",
+          }}
+        >
+          © {new Date().getFullYear()} CINEMATA
+        </div>
+      </footer>
     </div>
   );
 }
