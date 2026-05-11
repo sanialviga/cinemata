@@ -22,81 +22,13 @@ import {
   YAxis,
 } from "recharts";
 
+const API_URL = "/api";
+
 // ============================================================
 // 🎬 Configuration
 // ============================================================
 
 const FILMS_PER_PAGE = 5;
-
-const STORAGE_KEY = "cinemata-comments";
-
-// ============================================================
-// 🎬 Seed Comments
-// ============================================================
-
-const seedComments = {
-  1: [
-    {
-      name: "Andi",
-      rating: 5,
-      text: "Film terbaik yang pernah saya tonton! Konsepnya benar-benar luar biasa.",
-      date: "2 hari lalu",
-      sentiment: "positif",
-      confidence: 99.84,
-    },
-
-    {
-      name: "Sari",
-      rating: 4,
-      text: "Agak membingungkan di awal tapi worth it banget.",
-      date: "5 hari lalu",
-      sentiment: "positif",
-      confidence: 96.42,
-    },
-  ],
-
-  3: [
-    {
-      name: "Budi",
-      rating: 5,
-      text: "Heath Ledger sebagai Joker tidak tertandingi. Performa terbaik sepanjang masa.",
-      date: "1 minggu lalu",
-      sentiment: "positif",
-      confidence: 99.92,
-    },
-  ],
-
-  10: [
-    {
-      name: "Dewi",
-      rating: 5,
-      text: "Masterpiece sepanjang masa. Al Pacino dan Marlon Brando luar biasa!",
-      date: "3 hari lalu",
-      sentiment: "positif",
-      confidence: 99.95,
-    },
-
-    {
-      name: "Reza",
-      rating: 5,
-      text: "Film yang wajib ditonton setidaknya sekali seumur hidup.",
-      date: "1 minggu lalu",
-      sentiment: "positif",
-      confidence: 99.77,
-    },
-  ],
-
-  18: [
-    {
-      name: "Maya",
-      rating: 5,
-      text: "J.K. Simmons dan Miles Teller chemistry-nya gila. Film tentang dedikasi yang brutal.",
-      date: "4 hari lalu",
-      sentiment: "positif",
-      confidence: 99.88,
-    },
-  ],
-};
 
 // ==========================================================
 // Shuffle Movies
@@ -583,33 +515,61 @@ function App() {
   // Comments State
   // ==========================================================
 
-  const [comments, setComments] = useState(() => {
-    // ======================================================
-    // Load from localStorage
-    // ======================================================
+  const [comments, setComments] = useState({});
 
-    const savedComments = localStorage.getItem(STORAGE_KEY);
+  // ==========================================================
+  // Load Reviews from PostgreSQL
+  // ==========================================================
 
-    if (savedComments) {
+  useEffect(() => {
+    const fetchReviews = async () => {
       try {
-        return JSON.parse(savedComments);
+        const response = await axios.get(
+          `${API_URL}/reviews`,
+
+          {
+            timeout: 10000,
+          }
+        );
+
+        const reviews = response.data;
+
+        // ====================================================
+        // Group Reviews by Movie ID
+        // ====================================================
+
+        const grouped = {};
+
+        reviews.forEach((review) => {
+          if (!grouped[review.movie_id]) {
+            grouped[review.movie_id] = [];
+          }
+
+          grouped[review.movie_id].push({
+            id: review.id,
+
+            username: review.username,
+
+            text: review.comment,
+
+            rating: review.rating,
+
+            sentiment: review.sentiment,
+
+            confidence: review.confidence,
+
+            createdAt: review.created_at,
+          });
+        });
+
+        setComments(grouped);
       } catch (error) {
-        console.error("Failed to parse localStorage comments:", error);
+        console.error("Failed to fetch reviews:", error);
       }
-    }
+    };
 
-    // ======================================================
-    // Default Seed Comments
-    // ======================================================
-
-    const initialComments = {};
-
-    MOVIES.forEach((movie) => {
-      initialComments[movie.id] = seedComments[movie.id] || [];
-    });
-
-    return initialComments;
-  });
+    fetchReviews();
+  }, []);
 
   // ==========================================================
   // Save Theme
@@ -632,19 +592,6 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
-
-  // ==========================================================
-  // Save Comments to localStorage
-  // ==========================================================
-
-  useEffect(() => {
-    localStorage.setItem(
-      STORAGE_KEY,
-
-      JSON.stringify(comments)
-    );
-  }, [comments]);
-
   // ==========================================================
   // Movie Search Filter
   // ==========================================================
@@ -986,36 +933,48 @@ function App() {
 
     try {
       // ======================================================
-      // Call IndoBERT Backend
+      // Send Review to Backend
       // ======================================================
 
       const response = await axios.post(
-        "http://localhost:8000/predict",
+        `${API_URL}/reviews`,
 
         {
-          text: comment.text,
+          movie_id: selectedMovie.id,
+
+          username: comment.username,
+
+          comment: comment.text,
+
+          rating: comment.rating,
+        },
+
+        {
+          timeout: 10000,
         }
       );
 
-      const aiResult = response.data;
+      const savedReview = response.data;
 
       // ======================================================
-      // Save Comment with AI Result
+      // Save to Frontend State
       // ======================================================
 
-      const analyzedComment = {
-        ...comment,
+      const formattedComment = {
+        id: savedReview.id,
 
-        sentiment: aiResult.sentiment,
+        username: savedReview.username,
 
-        confidence: aiResult.confidence,
+        text: savedReview.comment,
 
-        scores: aiResult.scores,
+        rating: savedReview.rating,
+
+        sentiment: savedReview.sentiment,
+
+        confidence: savedReview.confidence,
+
+        createdAt: savedReview.created_at,
       };
-
-      // ======================================================
-      // Save Comment
-      // ======================================================
 
       setComments((prev) => ({
         ...prev,
@@ -1023,7 +982,7 @@ function App() {
         [selectedMovie.id]: [
           ...(prev[selectedMovie.id] || []),
 
-          analyzedComment,
+          formattedComment,
         ],
       }));
 
@@ -1048,9 +1007,9 @@ function App() {
         }
       }, 250);
     } catch (error) {
-      console.error("AI Prediction Error:", error);
+      console.error("Failed to save review:", error);
 
-      alert("Gagal terhubung ke AI Backend.\nPastikan FastAPI berjalan.");
+      alert("Gagal menyimpan review.\nPastikan backend berjalan.");
     }
   };
 

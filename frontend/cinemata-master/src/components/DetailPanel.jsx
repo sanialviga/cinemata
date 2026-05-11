@@ -35,9 +35,19 @@ const DetailPanel = ({
   // AI Statistics
   // ==========================================================
 
-  const positiveComments = comments.filter((c) => c.sentiment === "positif");
+  const totalReviews = comments.length;
 
-  const negativeComments = comments.filter((c) => c.sentiment === "negatif");
+  const positiveComments = comments.filter((c) => {
+    const sentiment = String(c.sentiment).toLowerCase().trim();
+
+    return sentiment.includes("positif") || sentiment.includes("positive");
+  });
+
+  const negativeComments = comments.filter((c) => {
+    const sentiment = String(c.sentiment).toLowerCase().trim();
+
+    return sentiment.includes("negatif") || sentiment.includes("negative");
+  });
 
   const totalAIComments = comments.filter((c) => c.sentiment).length;
 
@@ -51,13 +61,18 @@ const DetailPanel = ({
       ? Math.round((negativeComments.length / totalAIComments) * 100)
       : 0;
 
-  const averageConfidence =
-    totalAIComments > 0
-      ? Math.round(
-          comments.reduce((sum, c) => sum + (c.confidence || 0), 0) /
-            totalAIComments
-        )
-      : 0;
+  // ==========================================================
+  // Audience Sentiment
+  // ==========================================================
+
+  const audienceSentiment =
+    totalAIComments === 0
+      ? "Neutral"
+      : positivePercentage >= 60
+      ? "Positive"
+      : positivePercentage <= 40
+      ? "Negative"
+      : "Mixed";
 
   // ==========================================================
   // AI Summary
@@ -66,11 +81,13 @@ const DetailPanel = ({
   const aiSummary =
     totalAIComments === 0
       ? "Belum ada cukup data review untuk dianalisis AI. Tambahkan komentar pertama untuk memulai analisis sentimen."
-      : positivePercentage >= 70
-      ? "Mayoritas penonton memberikan respon positif terhadap film ini. Review menunjukkan film memiliki kualitas cerita, visual, atau akting yang sangat baik."
-      : negativePercentage >= 70
-      ? "Mayoritas review menunjukkan respon negatif. Penonton merasa beberapa aspek film kurang memuaskan."
-      : "Review penonton cukup beragam. Film ini memiliki opini yang terbagi antara positif dan negatif.";
+      : positivePercentage >= 75
+      ? "Mayoritas penonton sangat menyukai film ini. Review menunjukkan kualitas cerita, visual, dan pengalaman menonton yang memuaskan."
+      : positivePercentage >= 60
+      ? "Film ini mendapatkan respon positif dari sebagian besar penonton. Beberapa review menunjukkan pengalaman menonton yang cukup memuaskan."
+      : positivePercentage >= 45
+      ? "Review penonton cukup beragam. Sebagian penonton menyukai film ini, sementara sebagian lainnya merasa ada beberapa kekurangan."
+      : "Mayoritas penonton memberikan respon negatif terhadap film ini. Banyak review menyebut alur cerita, pacing, atau pengalaman menonton terasa kurang memuaskan.";
 
   return (
     <div
@@ -108,7 +125,6 @@ const DetailPanel = ({
       {/* ============================================ */}
       {/* Ambient Glow */}
       {/* ============================================ */}
-
       <div
         style={{
           position: "absolute",
@@ -132,11 +148,9 @@ const DetailPanel = ({
           pointerEvents: "none",
         }}
       />
-
       {/* ============================================ */}
       {/* Secondary Glow */}
       {/* ============================================ */}
-
       <div
         style={{
           position: "absolute",
@@ -163,7 +177,6 @@ const DetailPanel = ({
       {/* ==================================================== */}
       {/* Header */}
       {/* ==================================================== */}
-
       <div className="detail-panel-header-row">
         <div
           className="section-title"
@@ -199,11 +212,9 @@ const DetailPanel = ({
           ✕ Tutup
         </button>
       </div>
-
       {/* ==================================================== */}
       {/* Movie Detail */}
       {/* ==================================================== */}
-
       <div
         className="detail-body"
         style={{
@@ -681,11 +692,9 @@ const DetailPanel = ({
           </p>
         </div>
       </div>
-
-      {/* ==================================================== */}
+      {/* ============================================== */}
       {/* AI Analysis */}
-      {/* ==================================================== */}
-
+      {/* ============================================== */}
       <div
         style={{
           padding: "18px",
@@ -716,6 +725,8 @@ const DetailPanel = ({
 
             alignItems: "center",
 
+            justifyContent: "space-between",
+
             gap: "10px",
 
             marginBottom: "14px",
@@ -729,7 +740,19 @@ const DetailPanel = ({
             lineHeight: 1.3,
           }}
         >
-          🤖 AI Analysis
+          <span>🤖 AI Analysis</span>
+
+          <span
+            style={{
+              fontSize: "12px",
+
+              opacity: 0.65,
+
+              fontWeight: "500",
+            }}
+          >
+            💬 {totalReviews} Reviews
+          </span>
         </div>
 
         {/* ============================================== */}
@@ -844,7 +867,7 @@ const DetailPanel = ({
           </div>
 
           {/* ========================================== */}
-          {/* AI Confidence */}
+          {/* Audience Sentiment */}
           {/* ========================================== */}
 
           <div
@@ -853,9 +876,19 @@ const DetailPanel = ({
 
               borderRadius: "18px",
 
-              background: "rgba(59,130,246,0.08)",
+              background:
+                audienceSentiment === "Positive"
+                  ? "rgba(70,211,105,0.08)"
+                  : audienceSentiment === "Negative"
+                  ? "rgba(239,68,68,0.08)"
+                  : "rgba(59,130,246,0.08)",
 
-              border: "1px solid rgba(59,130,246,0.18)",
+              border:
+                audienceSentiment === "Positive"
+                  ? "1px solid rgba(70,211,105,0.18)"
+                  : audienceSentiment === "Negative"
+                  ? "1px solid rgba(239,68,68,0.18)"
+                  : "1px solid rgba(59,130,246,0.18)",
             }}
           >
             <div
@@ -873,7 +906,7 @@ const DetailPanel = ({
                 marginBottom: "2px",
               }}
             >
-              🎯 AI Confidence
+              🎭 Audience Sentiment
             </div>
 
             <div
@@ -884,16 +917,21 @@ const DetailPanel = ({
 
                 lineHeight: 1,
 
-                color: "#8ab4ff",
+                color:
+                  audienceSentiment === "Positive"
+                    ? "#7dff9b"
+                    : audienceSentiment === "Negative"
+                    ? "#ff7b7b"
+                    : "#8ab4ff",
               }}
             >
-              {averageConfidence}%
+              {audienceSentiment}
             </div>
           </div>
         </div>
 
         {/* ============================================== */}
-        {/* Confidence Bar */}
+        {/* Audience Sentiment Bar */}
         {/* ============================================== */}
 
         <div
@@ -920,9 +958,9 @@ const DetailPanel = ({
               opacity: 0.82,
             }}
           >
-            <span>AI Confidence Score</span>
+            <span>Positive Audience Ratio</span>
 
-            <span>{averageConfidence}%</span>
+            <span>{positivePercentage}%</span>
           </div>
 
           <div
@@ -940,15 +978,25 @@ const DetailPanel = ({
           >
             <div
               style={{
-                width: `${averageConfidence}%`,
+                width: `${positivePercentage}%`,
 
                 height: "100%",
 
                 borderRadius: "999px",
 
-                background: "linear-gradient(90deg, #3b82f6, #8ab4ff)",
+                background:
+                  positivePercentage >= 60
+                    ? "linear-gradient(90deg, #22c55e, #4ade80)"
+                    : positivePercentage >= 45
+                    ? "linear-gradient(90deg, #f59e0b, #fbbf24)"
+                    : "linear-gradient(90deg, #ef4444, #f87171)",
 
-                boxShadow: "0 0 12px rgba(59,130,246,0.35)",
+                boxShadow:
+                  positivePercentage >= 60
+                    ? "0 0 12px rgba(34,197,94,0.35)"
+                    : positivePercentage >= 45
+                    ? "0 0 12px rgba(245,158,11,0.35)"
+                    : "0 0 12px rgba(239,68,68,0.35)",
 
                 transition: "width 0.5s ease",
               }}
@@ -987,11 +1035,9 @@ const DetailPanel = ({
           {aiSummary}
         </div>
       </div>
-
       {/* ==================================================== */}
       {/* Comment Section */}
       {/* ==================================================== */}
-
       <div
         className="section-title"
         style={{
@@ -1000,17 +1046,13 @@ const DetailPanel = ({
       >
         💬 Komentar Penonton
       </div>
-
       {/* ==================================================== */}
       {/* Comment Form */}
       {/* ==================================================== */}
-
       <CommentForm onSubmit={onAddComment} />
-
       {/* ==================================================== */}
       {/* Comment List */}
       {/* ==================================================== */}
-
       <CommentList comments={comments} commentsTopRef={commentsSectionRef} />
     </div>
   );
