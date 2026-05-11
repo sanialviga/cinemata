@@ -2,16 +2,16 @@
 
 <div align="center">
 
-![CINEMATA Banner](https://img.shields.io/badge/CINEMATA-AI%20Movie%20Review%20Platform-0f172a?style=for-the-badge&logo=vercel&logoColor=white)
+![CINEMATA Banner](https://img.shields.io/badge/CINEMATA-AI%20Movie%20Review%20Platform-0f172a?style=for-the-badge\&logo=vercel\&logoColor=white)
 
-![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=flat-square&logo=react&logoColor=black)
-![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=flat-square\&logo=react\&logoColor=black)
+![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square\&logo=fastapi\&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square\&logo=python\&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-4169E1?style=flat-square\&logo=postgresql\&logoColor=white)
 ![AI](https://img.shields.io/badge/AI-IndoBERT-ff6b6b?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-### 🚀 AI Powered Movie Review Platform with Sentiment Analysis using IndoBERT
+### 🚀 AI Powered Movie Review Platform with IndoBERT Sentiment Analysis
 
 </div>
 
@@ -19,16 +19,31 @@
 
 # 📖 Overview
 
-CINEMATA adalah platform review film modern berbasis AI yang memungkinkan pengguna memberikan ulasan film dan mendapatkan analisis sentimen secara real-time menggunakan model IndoBERT.
+CINEMATA adalah platform review film modern berbasis AI yang mengintegrasikan teknologi Natural Language Processing (NLP) untuk melakukan analisis sentimen review pengguna secara real-time menggunakan model IndoBERT.
 
-Project ini menggabungkan:
+Project ini dibangun menggunakan arsitektur fullstack modern yang menggabungkan:
 
-- 🎨 Modern React Frontend
-- 🤖 AI Sentiment Analysis
-- ⚡ FastAPI Backend
-- 🧠 IndoBERT NLP Model
-- 🗄️ PostgreSQL Database
-- 🌐 Production Deployment with Nginx & SSL
+* 🎨 React Frontend
+* ⚡ FastAPI Backend
+* 🧠 IndoBERT NLP Model
+* 🗄️ PostgreSQL Database
+* 📊 AI Audience Analytics
+* 🌐 Production Deployment (Nginx + SSL)
+
+CINEMATA tidak hanya melakukan klasifikasi sentimen sederhana, tetapi juga mendukung:
+
+* mixed sentiment review detection
+* confidence scoring
+* realtime analytics aggregation
+* audience sentiment visualization
+* semantic contextual understanding
+
+Sistem AI menggunakan pendekatan hybrid:
+
+* 🤖 IndoBERT → semantic sentiment engine
+* 🎨 Frontend enhancer → UI/UX enhancement layer
+
+Arsitektur ini memungkinkan CINEMATA memberikan pengalaman AI movie review platform yang lebih realistis dan interaktif.
 
 ---
 
@@ -36,62 +51,95 @@ Project ini menggabungkan:
 
 ## 🎬 Movie Platform
 
-- Modern cinematic UI/UX
-- Responsive design
-- Random hero banner
-- Movie detail modal
-- Embedded trailer preview
-- Dynamic movie categories
-- Search movie feature
-- AI movie statistics
+* Modern cinematic UI/UX
+* Responsive design
+* Random hero banner
+* Movie detail modal
+* Embedded trailer preview
+* Dynamic movie categories
+* Search movie feature
+* AI movie statistics
 
 ---
 
 ## 🤖 AI Sentiment Analysis
 
-- Real-time sentiment prediction
-- IndoBERT fine-tuned model
-- Positive & negative classification
-- AI confidence scoring
-- Automatic review analytics
-- Review sentiment aggregation
+* Real-time sentiment prediction
+* IndoBERT fine-tuned sentiment model
+* Contextual semantic understanding
+* Mixed review polarity detection
+* Positive & negative classification
+* Confidence calibration system
+* Audience sentiment aggregation
+* Hybrid AI enhancer system
+* Ambiguous review understanding
+* Long-review sentiment analysis
 
 ---
 
 ## 📊 Analytics System
 
-- Positive percentage
-- Negative percentage
-- AI confidence score
-- Movie rating aggregation
-- AI review summary
-- Dynamic statistics panel
+* Positive & negative percentage
+* AI confidence aggregation
+* Audience sentiment detection
+* Neutral / mixed audience analysis
+* Real-time analytics update
+* Movie rating aggregation
+* Dynamic AI review summary
+* Sentiment-based movie insights
+* Interactive statistics panel
 
 ---
 
 ## 🌐 Production Ready
 
-- HTTPS SSL support
-- Nginx reverse proxy
-- FastAPI production deployment
-- Systemd backend service
-- PostgreSQL database integration
-- GitHub deployment ready
+* HTTPS SSL support
+* Nginx reverse proxy
+* FastAPI production deployment
+* Systemd backend service
+* PostgreSQL database integration
+* GitHub deployment ready
 
 ---
 
 # 🧠 AI Model
 
-CINEMATA menggunakan model:
+CINEMATA menggunakan model transformer:
 
 ```plaintext
-IndoBERT Sentiment Analysis
+indobenchmark/indobert-base-p1
 ```
 
-Model dilatih menggunakan dataset review film berbahasa Indonesia untuk melakukan klasifikasi:
+yang di-fine-tuning khusus untuk task:
 
-- 😊 Positif
-- 😤 Negatif
+```plaintext
+Binary Sentiment Classification
+```
+
+Model dilatih menggunakan kombinasi dataset:
+
+* SmSA Indonesian Sentiment Dataset
+* IMDb Movie Review Dataset
+* Custom Ambiguous Review Dataset
+* Long-form Indonesian Movie Review Dataset
+
+Model dirancang untuk memahami:
+
+* contextual sentiment
+* contrastive sentence
+* semantic polarity transition
+* ambiguous sentiment
+* mixed review sentiment
+
+Contoh review yang dapat dipahami model:
+
+```plaintext
+"Visualnya bagus tapi ceritanya membosankan"
+→ NEGATIF
+
+"Awalnya lambat namun endingnya luar biasa"
+→ POSITIF
+```
 
 Output model:
 
@@ -112,35 +160,35 @@ Output model:
 
 ## Frontend
 
-- React.js
-- Axios
-- CSS3
-- Responsive Layout
+* React.js
+* Axios
+* CSS3
+* Responsive Layout
 
 ## Backend
 
-- FastAPI
-- Python
-- Uvicorn
+* FastAPI
+* Python
+* Uvicorn
 
 ## AI & NLP
 
-- Transformers
-- PyTorch
-- IndoBERT
-- HuggingFace
+* Transformers
+* PyTorch
+* IndoBERT
+* HuggingFace
 
 ## Database
 
-- PostgreSQL
-- SQLAlchemy
+* PostgreSQL
+* SQLAlchemy
 
 ## Deployment
 
-- Ubuntu Server
-- Nginx
-- SSL (Let's Encrypt)
-- Systemd Service
+* Ubuntu Server
+* Nginx
+* SSL (Let's Encrypt)
+* Systemd Service
 
 ---
 
@@ -151,20 +199,29 @@ CINEMATA/
 │
 ├── backend/
 │   ├── app.py
+│   ├── database.py
 │   ├── requirements.txt
 │   ├── model/
+│   ├── routes/
 │   └── venv/
 │
 ├── frontend/
 │   └── cinemata-master/
 │       ├── public/
 │       ├── src/
+│       │   ├── components/
+│       │   ├── assets/
+│       │   └── App.jsx
 │       ├── package.json
 │       └── build/
 │
 ├── notebook/
-│   └── training.ipynb
+│   ├── CINEMATA_IndoBERT_Sentiment_Analysis_V2.ipynb
+│   ├── cinemata_long_review_positive_100.csv
+│   └── cinemata_long_review_negative_100.csv
 │
+├── model/
+├── ppt/
 └── README.md
 ```
 
@@ -307,19 +364,96 @@ Response:
 
 ---
 
+## Save Review
+
+### POST /reviews
+
+Request:
+
+```json
+{
+  "movie_id": 1,
+  "username": "Adi",
+  "comment": "Film ini sangat bagus",
+  "rating": 5
+}
+```
+
+Response:
+
+```json
+{
+  "id": 12,
+  "movie_id": 1,
+  "username": "Adi",
+  "comment": "Film ini sangat bagus",
+  "rating": 5,
+  "sentiment": "positif",
+  "confidence": 99.91
+}
+```
+
+---
+
 # 🗄️ PostgreSQL Integration
 
-CINEMATA mendukung PostgreSQL untuk menyimpan:
+CINEMATA menggunakan PostgreSQL sebagai persistent storage untuk:
 
-- User review
-- Rating film
-- AI sentiment history
-- Analytics data
+* User reviews
+* Movie ratings
+* AI sentiment results
+* Confidence scores
+* Audience analytics
+* Historical review data
+
+Sistem frontend tidak lagi menggunakan localStorage sebagai source of truth.
+
+Seluruh review disimpan secara realtime melalui:
+
+```plaintext id="nm08dr"
+React Frontend
+↓
+FastAPI Backend
+↓
+IndoBERT Inference
+↓
+PostgreSQL Database
+```
 
 Install PostgreSQL:
 
-```bash
+```bash id="9xzvh1"
 sudo apt install postgresql postgresql-contrib -y
+```
+
+---
+
+# 🏛️ System Architecture
+
+```plaintext id="e34t14"
+Frontend React
+│
+├── UI Enhancer Layer
+│   ├── emoji enhancement
+│   ├── keyword highlighting
+│   ├── sentiment visualization
+│   └── UX helper system
+│
+↓
+FastAPI Backend
+│
+├── IndoBERT Inference Engine
+├── Sentiment Classification
+├── Confidence Scoring
+└── Review Processing
+│
+↓
+PostgreSQL Database
+│
+├── Reviews
+├── Ratings
+├── Sentiment Results
+└── Analytics Data
 ```
 
 ---
@@ -328,7 +462,7 @@ sudo apt install postgresql postgresql-contrib -y
 
 ## Frontend Build
 
-```bash
+```bash id="me4o7v"
 npm run build
 ```
 
@@ -336,7 +470,7 @@ npm run build
 
 ## Nginx Deployment
 
-```nginx
+```nginx id="agw92z"
 server {
 
     listen 80;
@@ -390,7 +524,9 @@ server {
 
 # 🌐 Live Demo
 
-🔗 [https://movie.sysnetwork.biz.id](https://movie.sysnetwork.biz.id)
+🚀 Production Website:
+
+https://movie.sysnetwork.biz.id
 
 ---
 
@@ -398,63 +534,68 @@ server {
 
 ## 🎬 Home Page
 
-- Cinematic Hero Banner
-- Dynamic Movie Cards
-- AI Analytics
-- Modern UI
+* Cinematic Hero Banner
+* Dynamic Movie Cards
+* AI Analytics
+* Modern UI
 
 ## 🤖 AI Analysis
 
-- Sentiment Percentage
-- Confidence Score
-- AI Review Summary
+* Sentiment Percentage
+* Confidence Score
+* AI Review Summary
 
 ## 🎥 Movie Detail
 
-- Embedded Trailer
-- Rating Statistics
-- Interactive Review Panel
+* Embedded Trailer
+* Rating Statistics
+* Interactive Review Panel
 
 ---
 
 # 🔥 Future Improvements
 
-- 👤 Authentication System
-- 🧠 AI Recommendation System
-- 🎞️ TMDB API Integration
-- 💾 Full Database Integration
-- 📈 Trending Analytics
-- 🐳 Docker Deployment
-- ☁️ Cloud Deployment
-- 📱 Mobile Responsive Optimization
-- 🌙 Dark/Light Theme
-- ❤️ Watchlist System
+* 👤 Authentication & User Account
+* 🧠 AI Recommendation System
+* 🎞️ TMDB API Integration
+* 📈 Trending Movie Analytics
+* 🐳 Docker Deployment
+* ☁️ Cloud AI Deployment
+* 📱 Mobile Optimization
+* 🌙 Dynamic Theme System
+* ❤️ Watchlist & Favorites
+* 🧠 Multi-class Emotion Detection
+* 🎤 Voice Review Sentiment
+* 📊 Advanced AI Dashboard
+* 🔥 Real-time Trending Reviews
 
 ---
 
 # 👨‍💻 Developers
 
-| Nama              | NIM     | GitHub                                       |
-| ----------------- | ------- | -------------------------------------------- |
-| Adi Sani Alviga   | 1221601 | [@sanialviga](https://github.com/sanialviga) |
-| Vito Arsy Saputra | 1221623 | [@vitoas30](https://github.com/vitoas30/)    |
-| Reza Anwar Sanusi | 3220002 | -                                            |
+| Nama              | NIM     | GitHub                          |
+| ----------------- | ------- | ------------------------------- |
+| Adi Sani Alviga   | 1221601 | https://github.com/sanialviga   |
+| Vito Arsy Saputra | 1221623 | https://github.com/vitoas30     |
+| Reza Anwar Sanusi | 3220002 | https://github.com/rezaanwar114 |
 
 ---
 
-## 📌 Contributor Profiles
+# 📌 Contributor Profiles
 
-### Adi Sani Alviga
+## Adi Sani Alviga
 
-- GitHub: https://github.com/sanialviga
+* GitHub: https://github.com/sanialviga
 
-### Vito Arsy Saputra
+## Vito Arsy Saputra
 
-- GitHub: https://github.com/vitoas30/
+* GitHub: https://github.com/vitoas30
 
-### Reza Anwar Sanusi
+## Reza Anwar Sanusi
 
-- GitHub: Not Available
+* GitHub: https://github.com/rezaanwar114
+
+---
 
 # 📄 License
 
